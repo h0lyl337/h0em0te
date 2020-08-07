@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.8.9/brython.min.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/brython@3.8.9/brython_stdlib.js">
+</script>
+
+    <style>
+
+        header{background:purple;
+        color:white;
+        height:3em;
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        font-weight:bold;
+        font-size:20px;
+        }
+
+        body{
+        background:black;
+        }
+
+        button{
+        height:5em;
+        width:5em;
+        color:white;
+        background:purple;
+        border-radius:15px;
+        }
+        input {
+
+        background:white;
+        color:black;
+        border-radius:20px;
+        }
+    </style>
+</head>
+<body onload="brython()">
+<header>
+    <center>Ho3mote</center>
+</header>
+<br><br><br>
+<input id="ip"><button id="ok" style="height:2em;border-radius:20px;">ok</button>
+<script type="text/python">
+from browser import document, ajax
+
+global ip
+ip = '192.168.2.58'
+
+def volume_down(event):
+    req = ajax.ajax()
+    req.open("POST", "http://{0}:8060/keypress/volumedown".format(ip), True)
+    req.send()
+
+def volume_up(event):
+    req = ajax.ajax()
+    req.open("POST", "http://{0}:8060/keypress/volumeup".format(ip), True)
+    req.send()
+
+def up(event):
+    req = ajax.ajax()
+    req.open("POST", "http://{0}:8060/keypress/up".format(ip), True)
+    req.send()
+
+def down(event):
+    req = ajax.ajax()
+    req.open("POST", "http://{0}:8060/keypress/down".format(ip), True)
+    req.send()
+
+
+def left(event):
+    req = ajax.ajax()
+    req.open("POST", "http://{0}:8060/keypress/left", True)
+    req.send()
+
+
+def right(event):
+    req = ajax.ajax()
+    req.open("POST", "http://{0}:8060/keypress/right".format(ip), True)
+    req.send()
+
+def select(event):
+    req = ajax.ajax()
+    req.open("POST", "http://{0}:8060/keypress/select".format(ip), True)
+    req.send()
+
+def get_ip(event):
+    global ip
+    print(ip)
+    ip = document['ip'].value
+    print(ip)
+
+document["volume_down"].bind("click", volume_down)
+document["volume_up"].bind("click", volume_up)
+
+document["up"].bind("click", up)
+document["down"].bind("click", down)
+document["left"].bind("click", left)
+document["right"].bind("click", right)
+document["select"].bind("click", select)
+
+document["ok"].bind("click", get_ip)
+
+</script>
+<button style="float:right;border-radius:40px;">Power Off</button>
+<br><br><br><br>
+<center><button id="up">⬆</button></center>
+
+<center><button id="left"> ⬅ </button><button id="select"> ⭐ </button><button id="right"> ➡ </button></center>
+
+<center><button id="down">⬇</button></center>
+<button id="volume_down" style="border-radius:40px;">Vol:up</button> <button id="volume_up" style="border-radius:40px;">Vol:up</button>
+
+</body>
+</html>
